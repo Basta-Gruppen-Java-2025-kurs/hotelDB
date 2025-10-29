@@ -29,3 +29,5 @@
 * Edit the **mysql.env** file: set the `MYSQL_USER` to your MySQL user name, and `MYSQL_PASSWORD` to MySQL user's password
 
 <img width="484" height="437" alt="image" src="https://github.com/user-attachments/assets/c7c74964-86da-4d18-89e2-e45feb3e2cbb" />
+
+* In the terminal, run `git update-index --skip-worktree mysql.env`, so your edits to the user and password don't get pushed to the repository.
