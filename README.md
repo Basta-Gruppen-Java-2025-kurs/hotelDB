@@ -12,7 +12,7 @@
 
 * In order for the Database to work, you need to add the database driver to the project:
 
-<img width="1027" height="326" alt="image" src="https://github.com/user-attachments/assets/b8bd8fb9-cfd2-4e0d-87f4-b835f4258b6f" />
+<img width="1018" height="224" alt="image" src="https://github.com/user-attachments/assets/b0431ace-e57b-4482-a538-dc5dc62f40dc" />
 
 ## Setting up MySQL user and password for local server
 
