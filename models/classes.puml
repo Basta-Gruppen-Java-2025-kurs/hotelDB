@@ -1,0 +1,87 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Main {
+
+}
+
+class Database {
+}
+
+interface RoomDAO {
+}
+
+interface CustomerDAO {
+}
+
+interface BookingDAO {
+}
+
+class RoomDAOImpl {
+}
+
+class RoomControl {
+void addRoom()
+void getAllRooms()
+void getAvailableRooms()
+void updateRoomPrice()
+void updateRoomType()
+}
+
+class RoomService {
+}
+
+class CustomerDAOImpl {
+}
+
+class CustomerControl {
+void addCustomer()
+void getAllCustomers()
+void findCustomerByEmail()
+void updateCustomerCity()
+void deleteCustomer()
+}
+
+class CustomerService {
+}
+
+class BookingDAOImpl {
+}
+
+class BookingControl {
+void bookRoom()
+void getAllBookings()
+void getBookingsByCustomerEmail()
+void CancelBooking()
+}
+
+class BookingService {
+}
+
+class MainMenu {
+void menu()
+}
+
+class CreateTestDatabse {
+void createDataIfNotExists()
+}
+
+RoomDAOImpl ..|> RoomDAO
+CustomerDAOImpl ..|> CustomerDAO
+BookingDAOImpl ..|> BookingDAO
+Main --> CreateTestDatabse
+Main --> MainMenu
+MainMenu --> CustomerControl
+MainMenu --> RoomControl
+MainMenu --> BookingControl
+CustomerControl --> CustomerService
+CustomerService --> CustomerDAOImpl
+RoomControl --> RoomService
+RoomService --> RoomDAOImpl
+BookingControl --> BookingService
+BookingService --> BookingDAOImpl
+RoomDAOImpl --> Database
+CustomerDAOImpl --> Database
+BookingDAOImpl --> Database
+
+@enduml

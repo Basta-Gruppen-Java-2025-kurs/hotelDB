@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Room {
+room_id: integer
+type: String
+price: double
+number: integer
+available: boolean
+}
+
+class Customer {
+customer_id: integer
+name: String
+city: String
+email: String
+}
+
+class Booking {
+booking_id: integer
+room_id: integer
+customer_id: integer
+start_date: Date
+end_date: Date
+}
+
+Booking --> Room
+Booking --> Customer
+
+@enduml
