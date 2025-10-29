@@ -8,6 +8,12 @@
 
 <img width="960" height="799" alt="image" src="https://github.com/user-attachments/assets/596aa701-b297-4614-8829-78ce9bd29746" />
 
+## Database driver
+
+* In order for the Database to work, you need to add the database driver to the project:
+
+<img width="1027" height="326" alt="image" src="https://github.com/user-attachments/assets/b8bd8fb9-cfd2-4e0d-87f4-b835f4258b6f" />
+
 ## Setting up MySQL user and password for local server
 
 * In IntelliJ IDEA, select **Edit Configurations** from dropdown menu in the top right side
