@@ -1,4 +1,4 @@
-package Helpers;
+package main.Helpers;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
