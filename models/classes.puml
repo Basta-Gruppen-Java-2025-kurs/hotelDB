@@ -8,19 +8,23 @@ class Main {
 class Database {
 }
 
-interface RoomDAO {
+interface DAO.RoomDAO {
 }
 
-interface CustomerDAO {
+interface DAO.CustomerDAO {
 }
 
-interface BookingDAO {
+interface DAO.BookingDAO {
 }
 
-class RoomDAOImpl {
+interface Helpers.IMenu {
+void menu()
 }
 
-class RoomControl {
+class DAO.RoomDAOImpl {
+}
+
+class Control.RoomControl {
 void addRoom()
 void getAllRooms()
 void getAvailableRooms()
@@ -28,13 +32,13 @@ void updateRoomPrice()
 void updateRoomType()
 }
 
-class RoomService {
+class Service.RoomService {
 }
 
-class CustomerDAOImpl {
+class DAO.CustomerDAOImpl {
 }
 
-class CustomerControl {
+class Control.CustomerControl {
 void addCustomer()
 void getAllCustomers()
 void findCustomerByEmail()
@@ -42,20 +46,20 @@ void updateCustomerCity()
 void deleteCustomer()
 }
 
-class CustomerService {
+class Service.CustomerService {
 }
 
-class BookingDAOImpl {
+class DAO.BookingDAOImpl {
 }
 
-class BookingControl {
+class Control.BookingControl {
 void bookRoom()
 void getAllBookings()
 void getBookingsByCustomerEmail()
 void CancelBooking()
 }
 
-class BookingService {
+class Service.BookingService {
 }
 
 class MainMenu {
@@ -66,22 +70,27 @@ class CreateTestDatabse {
 void createDataIfNotExists()
 }
 
-RoomDAOImpl ..|> RoomDAO
-CustomerDAOImpl ..|> CustomerDAO
-BookingDAOImpl ..|> BookingDAO
+DAO.RoomDAOImpl ..|> DAO.RoomDAO
+DAO.CustomerDAOImpl ..|> DAO.CustomerDAO
+DAO.BookingDAOImpl ..|> DAO.BookingDAO
 Main --> CreateTestDatabse
 Main --> MainMenu
-MainMenu --> CustomerControl
-MainMenu --> RoomControl
-MainMenu --> BookingControl
-CustomerControl --> CustomerService
-CustomerService --> CustomerDAOImpl
-RoomControl --> RoomService
-RoomService --> RoomDAOImpl
-BookingControl --> BookingService
-BookingService --> BookingDAOImpl
-RoomDAOImpl --> Database
-CustomerDAOImpl --> Database
-BookingDAOImpl --> Database
+MainMenu --> Control.CustomerControl
+MainMenu --> Control.RoomControl
+MainMenu --> Control.BookingControl
+Control.CustomerControl --> Service.CustomerService
+Service.CustomerService --> DAO.CustomerDAOImpl
+Control.RoomControl --> Service.RoomService
+Service.RoomService --> DAO.RoomDAOImpl
+Control.BookingControl --> Service.BookingService
+Service.BookingService --> DAO.BookingDAOImpl
+DAO.RoomDAOImpl --> Database
+DAO.CustomerDAOImpl --> Database
+DAO.BookingDAOImpl --> Database
+Control.RoomControl --|> Helpers.IMenu
+Control.CustomerControl --|> Helpers.IMenu
+Control.BookingControl --|> Helpers.IMenu
+MainMenu --|> IMenu
+CreateTestDatabse --> Database
 
 @enduml
