@@ -11,6 +11,9 @@ public class MainMenu implements IMenu {
         mainMenu.addItem("Customer menu", new CustomerControl()::menu)
                 .addItem("Room menu", new RoomControl()::menu)
                 .addItem("Booking menu", new BookingControl()::menu);
+        if (!CreateTestData.testDataExists()) {
+            mainMenu.addItem("Create test data", CreateTestData::createDataIfNotExists);
+        }
         mainMenu.runMenu();
         System.out.println("Goodbye.");
     }
