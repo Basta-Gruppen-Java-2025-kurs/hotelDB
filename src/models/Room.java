@@ -56,12 +56,13 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", price=" + price +
-                ", number=" + number +
-                ", available=" + available +
-                '}';
+        return String.format(
+                "| %-3d | %-10s | %-7.2f | %-5d | %-9s |",
+                id,
+                type,
+                price,
+                number,
+                available ? "Yes" : "No"
+        );
     }
 }
