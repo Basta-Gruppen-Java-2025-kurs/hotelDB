@@ -1,30 +1,35 @@
 @startuml
-'https://plantuml.com/class-diagram
+'https://plantuml.com/ie-diagram
 
-class Room {
-room_id: integer
-type: String
-price: double
-number: integer
+skinparam linetype ortho
+
+entity Rooms {
+* room_id: integer <&key>
+..
+* type: String
+* price: double
+* number: integer
 available: boolean
 }
 
-class Customer {
-customer_id: integer
-name: String
+entity Customers {
+* customer_id: integer <&key>
+..
+* name: String
 city: String
 email: String
 }
 
-class Booking {
-booking_id: integer
-room_id: integer
-customer_id: integer
+entity Bookings {
+* booking_id: integer <&key>
+..
+* room_id: integer <&arrow-circle-right>
+* customer_id: integer <&arrow-circle-right>
 start_date: Date
 end_date: Date
 }
 
-Booking --> Room
-Booking --> Customer
+Bookings ||--|{ Rooms
+Bookings ||--|{ Customers
 
 @enduml
