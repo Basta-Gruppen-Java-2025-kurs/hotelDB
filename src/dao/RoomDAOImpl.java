@@ -1,19 +1,29 @@
 package dao;
 
+import database.Database;
 import models.Room;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAOImpl implements RoomDAO{
+
     @Override
     public void addRoom(Room room) throws SQLException {
         String sql = "INSERT INTO rooms (type, price, number, available) VALUES (?, ?, ?, ?)";
 
+        try(Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, room.getType());
+            statement.setDouble(2, room.getPrice());
+            statement.setInt(3, room.getNumber());
+            statement.setBoolean(4, room.isAvailable());
+
+            statement.executeUpdate();
+
+        }
 
     }
 
@@ -42,17 +52,54 @@ public class RoomDAOImpl implements RoomDAO{
     }
 
     @Override
-    public List<Room> getAvailableRooms() {
-        return List.of();
+    public List<Room> getAvailableRooms() throws SQLException {
+        List<Room> rooms = new ArrayList<>();
+        String sqlQuery = "SELECT * FROM rooms WHERE available = true;";
+
+        try(Connection connection = Database.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sqlQuery)) {
+
+            while (result.next()) {
+                Room room = new Room(
+                        result.getString("type"),
+                        result.getDouble("price"),
+                        result.getInt("number")
+                );
+                room.setId(result.getInt("room_id"));
+                room.setAvailable(result.getBoolean("available"));
+                rooms.add(room);
+            }
+        }
+
+        return rooms;
     }
 
     @Override
-    public void updateRoomPrice(int roomId, double price) {
+    public void updateRoomPrice(int roomId, double price) throws SQLException {
+        String sql = "UPDATE rooms SET price = ? WHERE room_id = ?";
 
+        try(Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, price);
+            statement.setInt(2, roomId);
+
+            statement.executeUpdate();
+        }
     }
 
     @Override
-    public void updateRoomType(int roomId, String type) {
+    public void updateRoomType(int roomId, String type) throws SQLException {
+        String sql = "UPDATE rooms SET type = ? WHERE room_id = ?";
 
+        try(Connection connection = Database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, type);
+            statement.setInt(2, roomId);
+
+            statement.executeUpdate();
+        }
     }
 }
