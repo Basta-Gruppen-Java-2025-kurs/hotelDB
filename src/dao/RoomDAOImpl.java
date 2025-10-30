@@ -11,7 +11,7 @@ public class RoomDAOImpl implements RoomDAO{
 
     @Override
     public void addRoom(Room room) throws SQLException {
-        String sql = "INSERT INTO rooms (type, price, number, available) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Rooms (type, price, number, available) VALUES (?, ?, ?, ?)";
 
         try(Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -30,7 +30,7 @@ public class RoomDAOImpl implements RoomDAO{
     @Override
     public List<Room> getAllRooms() throws SQLException {
         List<Room> rooms = new ArrayList<>();
-        String sqlQuery = "SELECT * FROM rooms";
+        String sqlQuery = "SELECT * FROM Rooms";
 
          try(Connection connection = Database.getConnection();
              Statement statement = connection.createStatement();
@@ -54,7 +54,7 @@ public class RoomDAOImpl implements RoomDAO{
     @Override
     public List<Room> getAvailableRooms() throws SQLException {
         List<Room> rooms = new ArrayList<>();
-        String sqlQuery = "SELECT * FROM rooms WHERE available = true;";
+        String sqlQuery = "SELECT * FROM Rooms WHERE available = true;";
 
         try(Connection connection = Database.getConnection();
             Statement statement = connection.createStatement();
@@ -77,7 +77,7 @@ public class RoomDAOImpl implements RoomDAO{
 
     @Override
     public void updateRoomPrice(int roomId, double price) throws SQLException {
-        String sql = "UPDATE rooms SET price = ? WHERE room_id = ?";
+        String sql = "UPDATE Rooms SET price = ? WHERE room_id = ?";
 
         try(Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -91,7 +91,7 @@ public class RoomDAOImpl implements RoomDAO{
 
     @Override
     public void updateRoomType(int roomId, String type) throws SQLException {
-        String sql = "UPDATE rooms SET type = ? WHERE room_id = ?";
+        String sql = "UPDATE Rooms SET type = ? WHERE room_id = ?";
 
         try(Connection connection = Database.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)) {
