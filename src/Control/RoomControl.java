@@ -70,6 +70,7 @@ public class RoomControl implements IMenu {
         printRoomTable(rooms);
 
         int id = safeInput.nextInt("Enter room ID to update:");
+        scanner.nextLine();
         String type = safeInput.nextLine("Enter new room type:");
         roomService.updateRoomType(id, type);
 
@@ -81,8 +82,8 @@ public class RoomControl implements IMenu {
             System.out.println("No rooms found.");
             return;
         }
-        System.out.println("| ID  | Type       | Price   | Num  | Available |");
-        System.out.println("|-----|------------|---------|------|-----------|");
+        System.out.println("| ID  | Type       | Price   | Num   | Available |");
+        System.out.println("|-----|------------|---------|-------|-----------|");
         rooms.forEach(System.out::println);
     }
 
