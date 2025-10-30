@@ -1,5 +1,6 @@
 package dao;
 
+import database.Database;
 import models.Customer;
 
 import java.sql.*;
@@ -9,72 +10,64 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO{
 
     @Override
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) throws SQLException{
 
-        String sql = "INSERT INTO customer (name, city, email)"+
+        String sql = "INSERT INTO Customer (name, city, email)"+
                 "VALUES (?, ?, ?)";
         try(Connection conn = Database.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql)){
+            PreparedStatement statement = conn.prepareStatement(sql)) {
 
             statement.setString(1, customer.getName());
-            statement.setString(2,customer.getCity());
-            statement.setString(3,customer.getEmail());
+            statement.setString(2, customer.getCity());
+            statement.setString(3, customer.getEmail());
 
             statement.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
         }
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers() throws SQLException{
         List<Customer> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT * FROM Customer";
         try(Connection conn = Database.getConnection();
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql)){
 
             while(rs.next()){
-                customers.add(new Customer(rs.getInt("customer_id"),
-                        rs.getString("customer_name"),
-                        rs.getString("customer_city"),
-                        rs.getString("customer_email")));
+                customers.add(new Customer(rs.getInt("customerId"),
+                        rs.getString("name"),
+                        rs.getString("city"),
+                        rs.getString("email")));
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }
 
         return customers;
     }
 
     @Override
-    public Customer findCustomerByEmail(String email) {
-        String sql = "SELECT * FROM customer WHERE customer_email = ?";
+    public Customer findCustomerByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM Customer WHERE email = ?";
         try(Connection conn = Database.getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql)){
+            PreparedStatement statement = conn.prepareStatement(sql)){
 
             statement.setString(1,email);
 
             try(ResultSet rs = statement.executeQuery()){
                 if(rs.next()){
-                    return new Customer(rs.getInt("customer_id"),
-                            rs.getString("customer_name"),
-                            rs.getString("customer_city"),
-                            rs.getString("customer_email"));
+                    return new Customer(rs.getInt("customerId"),
+                            rs.getString("name"),
+                            rs.getString("city"),
+                            rs.getString("email"));
                 }
-            }catch (SQLException e){
-                e.printStackTrace();
             }
-        }catch (SQLException e){
-            e.printStackTrace();
         }
 
         return null;
     }
 
     @Override
-    public int updateCustomerCity(int customerId, String newCity) {
-        String sql = "UPDATE customer SET customer_city = ? WHERE customer_id = ?";
+    public int updateCustomerCity(int customerId, String newCity) throws SQLException {
+        String sql = "UPDATE Customer SET city = ? WHERE customerId = ?";
         try(Connection conn = Database.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql)){
             statement.setInt(1,customerId);
@@ -82,23 +75,38 @@ public class CustomerDAOImpl implements CustomerDAO{
 
             return statement.executeUpdate();
 
-        }catch (SQLException e){
-            e.printStackTrace();
         }
-        return 0;
+
     }
 
     @Override
-    public int deleteCustomer(int customerId) {
-        String sql = "DELETE FROM customer WHERE customer_id = ?";
+    public int deleteCustomer(int customerId) throws SQLException {
+        String sql = "DELETE FROM Customer WHERE customerId = ?";
         try(Connection conn = Database.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql)){
             statement.setInt(1,customerId);
             return statement.executeUpdate();
-        }catch (SQLException e){
-            e.printStackTrace();
         }
-        return 0;
+
+    }
+
+    @Override
+    public Customer getCustomerById(int id) throws SQLException {
+        String sql = "SELECT * FROM Customer WHERE customerId = ?";
+        try(Connection conn = Database.getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql)){
+            statement.setInt(1,id);
+
+            try(ResultSet rs = statement.executeQuery()){
+                if (rs.next()){
+                    return new Customer(rs.getInt("customerId"),
+                            rs.getString("name"),
+                            rs.getString("city"),
+                            rs.getString("email"));
+                }
+            }
+        }
+        return null;
     }
 
 
