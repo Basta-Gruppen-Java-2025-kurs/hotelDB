@@ -2,7 +2,7 @@
 
 ## Database Structure
 
-<img width="324" height="356" alt="image" src="https://github.com/user-attachments/assets/0b5eed43-c6d9-4533-acdb-cc89eb2899a7" />
+<img width="368" height="355" alt="image" src="https://github.com/user-attachments/assets/e60c1eba-bd6f-49cb-865d-4190f39123f4" />
 
 ## Class Structure
 
