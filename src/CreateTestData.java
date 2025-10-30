@@ -23,10 +23,10 @@ public class CreateTestData {
                   ('Double', 1400, 105, TRUE),
                   ('Double', 1400, 106, TRUE),
                   ('Double', 1450, 107, TRUE),
-                  ('Suite', 2000, 108, TRUE),
+                  ('Suite', 2000, 108, FALSE),
                   ('Suite', 2000, 109, TRUE),
                   ('Single', 800, 201, TRUE),
-                  ('Single', 800, 202, TRUE),
+                  ('Single', 800, 202, FALSE),
                   ('Single', 800, 203, TRUE),
                   ('Single', 800, 204, TRUE),
                   ('Double', 1400, 205, TRUE),
@@ -50,7 +50,7 @@ public class CreateTestData {
             return;
         }
         for (String query: QUERIES) {
-            try (Connection conn = Database.getConnection();
+            try (Connection conn = database.Database.getConnection();
                  Statement statement = conn.createStatement()) {
                 statement.execute(query);
             } catch (SQLException e) {
@@ -77,7 +77,7 @@ public class CreateTestData {
                   FOREIGN KEY (customer_id) REFERENCES Customers (customer_id));
                   """};
         for (String query: QUERIES) {
-            try (Connection conn = Database.getConnection();
+            try (Connection conn = database.Database.getConnection();
                  Statement statement = conn.createStatement()) {
                 statement.execute(query);
             } catch (SQLException e) {
@@ -92,7 +92,7 @@ public class CreateTestData {
                 "SELECT COUNT(*) howMany FROM Rooms; -- 24"
         };
         createDatabaseIfNotExists();
-        try(Connection conn = Database.getConnection()) {
+        try(Connection conn = database.Database.getConnection()) {
             for(String query: CHECK_QUERIES) {
                 try (Statement s = conn.createStatement()) {
                     int checkNumber = Integer.parseInt(query.substring(query.length()-2));
