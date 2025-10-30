@@ -1,3 +1,6 @@
+import Helpers.TextMenu;
+import database.Database;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,7 +53,7 @@ public class CreateTestData {
             return;
         }
         for (String query: QUERIES) {
-            try (Connection conn = database.Database.getConnection();
+            try (Connection conn = Database.getConnection();
                  Statement statement = conn.createStatement()) {
                 statement.execute(query);
             } catch (SQLException e) {
@@ -63,10 +66,10 @@ public class CreateTestData {
     public static void createDatabaseIfNotExists() {
         final String[] QUERIES =  new String[]
                 { "CREATE DATABASE IF NOT EXISTS hotelDB;",
-                        "USE hotelDB;",
-                        "CREATE TABLE IF NOT EXISTS Rooms (room_id INT AUTO_INCREMENT PRIMARY KEY, type VARCHAR(50), price DOUBLE, number INT, available BOOL);",
-                        "CREATE TABLE IF NOT EXISTS Customers (customer_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50), city VARCHAR(50), email VARCHAR(100));",
-                        """
+                  "USE hotelDB;",
+                  "CREATE TABLE IF NOT EXISTS Rooms (room_id INT AUTO_INCREMENT PRIMARY KEY, type VARCHAR(50), price DOUBLE, number INT, available BOOL);",
+                  "CREATE TABLE IF NOT EXISTS Customers (customer_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(50), city VARCHAR(50), email VARCHAR(100));",
+                  """
                   CREATE TABLE IF NOT EXISTS Bookings (
                   booking_id INT AUTO_INCREMENT PRIMARY KEY,
                   room_id INT NOT NULL,
@@ -77,7 +80,7 @@ public class CreateTestData {
                   FOREIGN KEY (customer_id) REFERENCES Customers (customer_id));
                   """};
         for (String query: QUERIES) {
-            try (Connection conn = database.Database.getConnection();
+            try (Connection conn = Database.getConnection();
                  Statement statement = conn.createStatement()) {
                 statement.execute(query);
             } catch (SQLException e) {
@@ -92,7 +95,7 @@ public class CreateTestData {
                 "SELECT COUNT(*) howMany FROM Rooms; -- 24"
         };
         createDatabaseIfNotExists();
-        try(Connection conn = database.Database.getConnection()) {
+        try(Connection conn = Database.getConnection()) {
             for(String query: CHECK_QUERIES) {
                 try (Statement s = conn.createStatement()) {
                     int checkNumber = Integer.parseInt(query.substring(query.length()-2));
@@ -108,5 +111,24 @@ public class CreateTestData {
             System.out.println("Error getting database connection: " + e);
         }
         return true;
+    }
+
+    public static void dropDatabase() {
+        final String[] QUERIES = new String[] { "DROP TABLE Bookings;", "DROP TABLE Customers;", "DROP TABLE Rooms;" };
+        if (!TextMenu.yesNoQuestion("Are you sure you want to drop the database? There's no undo.")) {
+            return;
+        }
+        try ( Connection conn = Database.getConnection() ) {
+            for (String query: QUERIES) {
+                try (Statement statement = conn.createStatement()) {
+                    statement.execute(query);
+                } catch (SQLException e) {
+                    System.out.println("Error dropping a table: " + e);
+                }
+            }
+            System.out.println("Database dropped");
+        } catch (SQLException e) {
+            System.out.println("Error getting connection: " + e);
+        }
     }
 }
