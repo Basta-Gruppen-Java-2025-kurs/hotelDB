@@ -1,6 +1,8 @@
 package models;
 
-public class Room {
+import Helpers.Named;
+
+public class Room implements Named {
     private int id;
     private String type;
     private double price;
@@ -64,5 +66,10 @@ public class Room {
                 number,
                 available ? "Yes" : "No"
         );
+    }
+
+    @Override
+    public String getName() {
+        return "Room " + number;
     }
 }
