@@ -75,12 +75,14 @@ public class TableFormatter {
         return formatAnyRow(false, items);
     }
 
-    public void setTitle(String title) {
+    public TableFormatter setTitle(String title) {
         this.title = title;
+        return this;
     }
 
-    public void setTableNote(String tableNote) {
+    public TableFormatter setTableNote(String tableNote) {
         this.tableNote = tableNote;
+        return this;
     }
 
     public String formatTitle(String... titleItems) {
